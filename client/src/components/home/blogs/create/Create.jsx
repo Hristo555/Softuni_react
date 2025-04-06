@@ -22,7 +22,7 @@ export default function Create(){
                 <label htmlFor="text">Text:</label>
                 <input type="text" id="text" name="body" placeholder="Enter blog text."/>
                 <label htmlFor="imageURL">Image:</label>
-                <input type="hidden" id="imageURL" name="id" />
+                <input type="hidden" id="imageURL" name="_id" />
 
                 <button className="submit-btn" type="submit">Submit</button>
             </div>

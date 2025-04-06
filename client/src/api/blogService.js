@@ -10,6 +10,9 @@ export default{
 
        return blogs;
     },
+    getOne(blogid){
+        return request.get(`${baseURL}/${blogid}`);
+    },
     create(blogData){
         console.info(blogData)
         return request.post(baseURL, blogData);

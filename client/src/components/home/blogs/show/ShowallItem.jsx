@@ -1,13 +1,12 @@
-
-export default function Showallitem({id, title, body}){
+import { Link } from "react-router";
+export default function Showallitem({_id, title, body}){
     return(
         <div className="blogs">
             <div className="blog">
                 <div className="blog-inner">
-                    {id}
                     {title}
                     {body}
-                    <div>Check Out Blog</div>
+                    <Link to={`/blog/${_id}/details`}>Check Out Blog</Link>
                 </div>
             </div>
         </div>
