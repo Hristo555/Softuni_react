@@ -6,7 +6,7 @@ export default function Showallitem({_id, title, body}){
                 <div className="blog-inner">
                     {title}
                     {body}
-                    <Link to={`/blog/${_id}/details`}>Check Out Blog</Link>
+                    <Link to={`/blogs/${_id}/details`}>Check Out Blog</Link>
                 </div>
             </div>
         </div>

@@ -10,11 +10,13 @@ export default{
 
        return blogs;
     },
+    delete(blogid){
+        return request.delete(`${baseURL}/${blogid}`);
+    },
     getOne(blogid){
         return request.get(`${baseURL}/${blogid}`);
     },
     create(blogData){
-        console.info(blogData)
         return request.post(baseURL, blogData);
-    }
+    },
 }
