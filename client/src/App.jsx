@@ -12,10 +12,10 @@ import BlogEdit from "./components/blogs/details/BlogEdit"
 import { useState } from "react"
 
 export default function App() {
-    const [email, setEmail] = useState('');
+    const [authData, setAuthData] = useState('');
 
-    const userLoginHandler = (authData) => {
-      setEmail(authData.email);
+    const userLoginHandler = (data) => {
+      setAuthData(data);
     }
   return (
     <div className="box">
@@ -29,7 +29,7 @@ export default function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/createblog" element={<Create />} />
             <Route path="/blogs/:blogid/details" element={<BlogDetails />} />
-            <Route path="/blogs/:blogid/edit" element={<BlogEdit email={email}/>} />
+            <Route path="/blogs/:blogid/edit" element={<BlogEdit email={authData.email}/>} />
         </Routes>
     </main>
 
