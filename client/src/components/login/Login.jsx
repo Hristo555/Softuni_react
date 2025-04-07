@@ -1,10 +1,12 @@
 import { Link, useNavigate } from "react-router";
 import Register from "../register/Register"
-import { useActionState } from "react";
+import { useActionState, useContext } from "react";
 import { useLogin } from "../../api/authApi";
+import { UserContext } from "../../context/UserContext";
 
 export default function Login({onLogin}){
     const navigate = useNavigate();
+    const {userLoginHandler} = useContext(UserContext)
     const { login } = useLogin();
     
     const loginHandler = async (prevState, formData) => {
@@ -12,7 +14,7 @@ export default function Login({onLogin}){
 
         const authData = await login(values.email, values.password);
 
-        onLogin(authData);
+        userLoginHandler(authData);
         
         navigate('/blogs');
 

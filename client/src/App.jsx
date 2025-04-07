@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router"
 
+import { UserContext } from "./context/UserContext"
 import Header from "./components/header/Header"
 import Home from "./components/home/Home"
 import Footer from "./components/footer/Footer"
@@ -18,22 +19,24 @@ export default function App() {
       setAuthData(data);
     }
   return (
-    <div className="box">
-        <Header />
+    <UserContext.Provider value={{...authData, userLoginHandler}}>
+      <div className="box">
+          <Header />
 
-    <main className="main">
-        <Routes>
-            <Route index element={<Home />}/>
-            <Route path="/blogs" element={<Show_all />} />
-            <Route path="/login" element={<Login onLogin={userLoginHandler} />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/createblog" element={<Create />} />
-            <Route path="/blogs/:blogid/details" element={<BlogDetails />} />
-            <Route path="/blogs/:blogid/edit" element={<BlogEdit email={authData.email}/>} />
-        </Routes>
-    </main>
+      <main className="main">
+          <Routes>
+              <Route index element={<Home />}/>
+              <Route path="/blogs" element={<Show_all />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/createblog" element={<Create />} />
+              <Route path="/blogs/:blogid/details" element={<BlogDetails />} />
+              <Route path="/blogs/:blogid/edit" element={<BlogEdit />} />
+          </Routes>
+      </main>
 
-        <Footer /> 
-    </div>
+          <Footer /> 
+      </div>
+    </UserContext.Provider>
   )
 }

@@ -1,12 +1,14 @@
-import { use, useEffect, useState } from "react";
+import { use, useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import blogService from "../../../api/blogService";
 import commentService from "../../../api/commentService";
 import CommentCreate from "../../comments/CommentCreate"
 import CommentShow from "../../comments/CommentShow";
+import { UserContext } from "../../../context/UserContext";
 
-export default function BlogEdit({email}){
+export default function BlogEdit(){
     const navigate = useNavigate();
+    const { email } = useContext(UserContext)
     const { blogid } = useParams();
     const [comments, setComments] = useState();
     const [blog, setBlog] = useState({});
