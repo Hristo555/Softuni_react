@@ -5,13 +5,18 @@ import Home from "./components/home/Home"
 import Footer from "./components/footer/Footer"
 import Login from "./components/login/Login"
 import Register from "./components/register/Register"
-import Show_all from "./components/home/blogs/show/Show_All"
-import Create from "./components/home/blogs/create/Create"
-import BlogDetails from "./components/home/blogs/details/BlogDetails"
-import BlogEdit from "./components/home/blogs/details/BlogEdit"
+import Show_all from "./components/blogs/show/Show_All"
+import Create from "./components/blogs/create/Create"
+import BlogDetails from "./components/blogs/details/BlogDetails"
+import BlogEdit from "./components/blogs/details/BlogEdit"
+import { useState } from "react"
 
 export default function App() {
+    const [email, setEmail] = useState('');
 
+    const userLoginHandler = (email) => {
+      setEmail(email);
+    }
   return (
     <div className="box">
         <Header />
@@ -20,11 +25,11 @@ export default function App() {
         <Routes>
             <Route index element={<Home />}/>
             <Route path="/blogs" element={<Show_all />} />
-            <Route path="/login" element={<Login />} />
+            <Route path="/login" element={<Login onLogin={userLoginHandler} />} />
             <Route path="/register" element={<Register />} />
             <Route path="/createblog" element={<Create />} />
             <Route path="/blogs/:blogid/details" element={<BlogDetails />} />
-            <Route path="/blogs/:blogid/edit" element={<BlogEdit />} />
+            <Route path="/blogs/:blogid/edit" element={<BlogEdit email={email}/>} />
         </Routes>
     </main>
 

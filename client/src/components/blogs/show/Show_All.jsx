@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
 
-import blogService from "../../../../api/blogService";
+import blogService from "../../../api/blogService";
 import Showallitem from "./Showallitem"
 import Create from "../create/Create"
 

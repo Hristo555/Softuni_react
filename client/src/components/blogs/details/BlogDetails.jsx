@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router";
-import blogService from "../../../../api/blogService";
+import blogService from "../../../api/blogService";
 
 export default function BlogDetails(){
     const navigate = useNavigate();
@@ -26,7 +26,6 @@ export default function BlogDetails(){
 
        navigate('/blogs');
     }
-
 
     return(
         <>

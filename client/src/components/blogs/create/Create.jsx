@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router";
 
-import blogService from "../../../../api/blogService";
+import blogService from "../../../api/blogService";
 
 export default function Create(){
     const navigate = useNavigate();
