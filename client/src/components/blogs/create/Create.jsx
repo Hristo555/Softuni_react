@@ -1,14 +1,14 @@
 import { useNavigate } from "react-router";
-
-import blogService from "../../../api/blogService";
+import { userCreateBlog } from "../../../api/blogService";
 
 export default function Create(){
     const navigate = useNavigate();
-    
+    const { create } = userCreateBlog();
+
     const submitAction = async (formData) => {
         const blogData = Object.fromEntries(formData);
 
-        await blogService.create(blogData);
+        await create(blogData);
         
         navigate('/blogs');
     };

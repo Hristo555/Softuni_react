@@ -18,7 +18,8 @@ export default function Show_all(){
         <div className="blogs-wrapper">
             <div className="all-blogs">
             {blogs.length > 0 
-                ? blogs.map(blog => <Showallitem key={blog._id} {...blog} />)
+                ? blogs.map(blog => <Showallitem key
+                    ={blog._id} {...blog} />)
                 : <h3 className="no-blogs">There are no blogs avaliable</h3>}
             </div>
 
