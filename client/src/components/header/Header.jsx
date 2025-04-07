@@ -11,6 +11,7 @@ export default function Header(){
 
                 <Link className={styles.links} to="/login">Login</Link>
                 <Link className={styles.links} to="/register">Register</Link>
+                <Link className={styles.links} to="/logout">Logout</Link>
             </nav>
         </header>
     );
