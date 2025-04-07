@@ -19,4 +19,7 @@ export default{
     create(blogData){
         return request.post(baseURL, blogData);
     },
+    edit(blogid, blogData){
+        return request.put(`${$baseURL}/${blogid}`, {...blogData, _id: blogid});
+    }
 }

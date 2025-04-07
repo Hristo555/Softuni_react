@@ -1,18 +1,20 @@
 import { Link, useNavigate } from "react-router";
 import Register from "../register/Register"
 import { useActionState } from "react";
+import { useLogin } from "../../api/authApi";
 
 export default function Login({onLogin}){
     const navigate = useNavigate();
+    const { login } = useLogin();
     
-    const loginHandler = (prevState, formData) => {
+    const loginHandler = async (prevState, formData) => {
         const values = Object.fromEntries(formData);
 
-        const email = formData.get('email');
+        const authData = await login(values.email, values.password);
+
+        onLogin(authData);
         
-        onLogin(values.email);
-        
-        // navigate('/blogs');
+        navigate('/blogs');
 
         return values;
     };
