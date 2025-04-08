@@ -1,22 +1,30 @@
-import { use, useContext, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router";
-import blogService from "../../../api/blogService";
+import { useEffect, useState } from "react";
+import {useNavigate, useParams } from "react-router";
 import commentService from "../../../api/commentService";
 import CommentCreate from "../../comments/CommentCreate"
 import CommentShow from "../../comments/CommentShow";
-import { UserContext } from "../../../context/UserContext";
+import { useBlogs, useEditBlog } from "../../../api/blogService";
+import useAuth from "../../../hooks/useAuth";
 
 export default function BlogEdit(){
     const navigate = useNavigate();
-    const { email } = useContext(UserContext)
+    const { email } = useAuth();
     const { blogid } = useParams();
-    const [comments, setComments] = useState();
-    // const [blog, setBlog] = useState({});
-    const {blog} = useBlog();
-
+    const [comments, setComments] = useState(blogid);
+    const { edit } = useEditBlog();
+    const { blog } = useBlogs();
+    
     useEffect(() => {
         commentService.getAll(blogid).then(setComments);
     }, [blogid]);
+
+    const formAction = async (formData) => {
+        const blogData = Object.fromEntries(formData);
+
+        await edit(blogid, blogData);
+
+        navigate(`/blogs/${blogid}/details`);
+    };
     
     const commentCreateHandler = (newComment) => {
         setComments(state => [...state, newComment])
@@ -24,7 +32,7 @@ export default function BlogEdit(){
 
     return(
         <>
-         <form className="edit">
+         <form className="edit" action={formAction}>
             <div className="container">
                 <label htmlFor="title">Title:</label>
                 <input type="text" id="title" name="title" placeholder="Enter blog title.." defaultValue={blog.title}/>

@@ -1,20 +1,8 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import request from "../utils/request"
-import { UserContext } from "../context/UserContext";
+import useAuth from "../hooks/useAuth";
 
 const baseURL = 'http://localhost:3030/data/blogs';
-
-export default{
-    delete(blogid){
-        return request.delete(`${baseURL}/${blogid}`);
-    },
-    getOne(blogid){
-        return request.get(`${baseURL}/${blogid}`);
-    },
-    edit(blogid, blogData){
-        return request.put(`${$baseURL}/${blogid}`, {...blogData, _id: blogid});
-    }
-}
 
 export const useBlogs = () => {
     const [blogs, setBlogs] = useState([]);
@@ -25,20 +13,14 @@ export const useBlogs = () => {
 
     return {
         blogs,
-        setBlogs
-    }
-}
+    };
+};
 
 export const userCreateBlog = () => {
-    const {accessToken} = useContext(UserContext);
+    const {request} = useAuth();
 
-    const options = {
-        headers: {
-            'X-Authorization': accessToken
-        }
-    };
     const create = (blogData) =>
-         request.post(baseURL, blogData, options);
+         request.post(baseURL, blogData);
 
     return {create,}
 };
@@ -52,5 +34,26 @@ export const useBlog = (blogid) => {
 
     return {
         blog,
-    }
-}
+    };
+};
+
+export const useEditBlog = () => {
+    const {request} = useAuth();
+
+    const edit = (blogid, blogData) => request.put(`${$baseURL}/${blogid}`, {...blogData, _id: blogid});
+    
+
+    return {
+        edit,
+    };
+};
+
+export const useDeleteBlog = () => {
+    const {request} = useAuth();
+
+    const deleteBlog = (blogid) => request.delete(`${baseURL}/${blogid}`);
+
+    return {
+        deleteBlog,
+    };
+};

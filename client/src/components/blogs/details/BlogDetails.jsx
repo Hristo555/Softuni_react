@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router";
-import blogService, { useBlog } from "../../../api/blogService";
+import { useBlog, useDeleteBlog } from "../../../api/blogService";
 
 export default function BlogDetails(){
     const navigate = useNavigate();
-    // const [blog, setBlog] = useState({});
     const {blogid} = useParams();
     const {blog} = useBlog();
+    const { deleteBlog } = useDeleteBlog()
 
-    useEffect(() => {
-    }, [blogid]);
+    // useEffect(() => {
+    // }, [blogid]);
 
     const Delete = async () => {
        const hasConfirm = confirm(`Are you sure you want to delete ${blog.title}?`);
@@ -19,7 +19,7 @@ export default function BlogDetails(){
             return;
         }
 
-        await blogService.delete(blogid);
+        await deleteBlog(blogid);
 
        navigate('/blogs');
     }
