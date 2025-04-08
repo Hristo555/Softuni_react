@@ -1,17 +1,14 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router";
-import blogService from "../../../api/blogService";
+import blogService, { useBlog } from "../../../api/blogService";
 
 export default function BlogDetails(){
     const navigate = useNavigate();
-    const [blog, setBlog] = useState({});
+    // const [blog, setBlog] = useState({});
     const {blogid} = useParams();
+    const {blog} = useBlog();
 
     useEffect(() => {
-        (async ()=>{
-            const result = await blogService.getOne(blogid);
-            setBlog(result);
-        })();
     }, [blogid]);
 
     const Delete = async () => {

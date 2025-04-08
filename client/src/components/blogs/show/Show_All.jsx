@@ -1,18 +1,11 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router";
 
-import blogService from "../../../api/blogService";
+import { useBlogs } from "../../../api/blogService";
 import Showallitem from "./Showallitem"
 import Create from "../create/Create"
 
 export default function Show_all(){
-
-    const [blogs, setBlogs] = useState([]);
-
-    useEffect(() => {
-        blogService.getAll()
-            .then(setBlogs)
-    }, []);
+    const {blogs} = useBlogs();
 
     return(
         <div className="blogs-wrapper">

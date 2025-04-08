@@ -11,15 +11,14 @@ export default function BlogEdit(){
     const { email } = useContext(UserContext)
     const { blogid } = useParams();
     const [comments, setComments] = useState();
-    const [blog, setBlog] = useState({});
+    // const [blog, setBlog] = useState({});
+    const {blog} = useBlog();
 
     useEffect(() => {
-        blogService.getOne(blogid).then(setBlog);
-
         commentService.getAll(blogid).then(setComments);
     }, [blogid]);
     
-    const commentCreateHandl = (newComment) => {
+    const commentCreateHandler = (newComment) => {
         setComments(state => [...state, newComment])
     };
 
@@ -40,7 +39,7 @@ export default function BlogEdit(){
         <CommentCreate 
         email={email}
         blogid={blogid}
-        onCreate={commentCreateHandl}/>
+        onCreate={commentCreateHandler}/>
 
         <CommentShow comments={comments}/>
         </>
