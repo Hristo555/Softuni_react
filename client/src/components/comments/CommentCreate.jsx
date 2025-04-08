@@ -1,4 +1,4 @@
-import commentService from "../../api/commentService";
+import commentService from "../../api/commentApi";
 
 export default function CommentCreate({email, blogid}){
     const commentAdd = async (formData) => {

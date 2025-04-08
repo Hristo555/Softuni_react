@@ -3,10 +3,10 @@ import { UserContext } from "../context/UserContext";
 import request from "../utils/request";
 
 export default function useAuth() {
-    const {authData} = useContext(UserContext);
+    const authData = useContext(UserContext);
 
     const requestWrapper = (method, url, data, options = {}) => {
-        const optionsWrapper = {
+        const authOptions = {
             ...options,
             headers: {
                 'X-Authorization': authData.accessToken,
@@ -15,12 +15,11 @@ export default function useAuth() {
 
         }
 
-       return request.baseRequest(method, url, data, optionsWrapper);
+       return request.baseRequest(method, url, data, authData.accessToken ? authOptions : options);
     };
 
     return {
         ...authData,
-        accessToken,
         request: {
             get: requestWrapper.bind(null, 'GET'),
             post: requestWrapper.bind(null, 'POST'),

@@ -1,6 +1,4 @@
-import { useEffect, useState } from "react";
 import {useNavigate, useParams } from "react-router";
-import commentService from "../../../api/commentService";
 import CommentCreate from "../../comments/CommentCreate"
 import CommentShow from "../../comments/CommentShow";
 import { useBlogs, useEditBlog } from "../../../api/blogService";
@@ -10,14 +8,10 @@ export default function BlogEdit(){
     const navigate = useNavigate();
     const { email } = useAuth();
     const { blogid } = useParams();
-    const [comments, setComments] = useState(blogid);
     const { edit } = useEditBlog();
     const { blog } = useBlogs();
+    const {comments} = useComments(blogid);
     
-    useEffect(() => {
-        commentService.getAll(blogid).then(setComments);
-    }, [blogid]);
-
     const formAction = async (formData) => {
         const blogData = Object.fromEntries(formData);
 
@@ -27,7 +21,7 @@ export default function BlogEdit(){
     };
     
     const commentCreateHandler = (newComment) => {
-        setComments(state => [...state, newComment])
+        // setComments(state => [...state, newComment])
     };
 
     return(

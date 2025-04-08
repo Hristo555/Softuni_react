@@ -37,6 +37,25 @@ export const useBlog = (blogid) => {
     };
 };
 
+export const useLatesBlogs = () => {
+    const [latesBlogs, setLatestBlogs] = useState([]);
+
+    const page_size = 3;
+    
+    useEffect(() => {
+        const searchParams = new URLSearchParams({
+            sortBy: '_createdOn desc',
+            pageSize: page_size
+        });
+
+        request.get(`${baseURL}?${searchParams.toString()}`).then(setLatestBlogs);
+    }, [searchParams]);
+
+    return {
+        latestBlogs,
+    };
+};
+
 export const useEditBlog = () => {
     const {request} = useAuth();
 
