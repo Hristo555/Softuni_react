@@ -6,7 +6,6 @@ import Create from "../create/Create"
 
 export default function Show_all(){
     const {blogs} = useBlogs();
-
     return(
         <div className="blogs-wrapper">
             <div className="all-blogs">

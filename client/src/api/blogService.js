@@ -16,18 +16,24 @@ export const useBlogs = () => {
     };
 };
 
-export const userCreateBlog = () => {
+export const useCreateBlog = () => {
     const {request} = useAuth();
 
-    const create = (blogData) =>
-         request.post(baseURL, blogData);
+    const create = (blogData) => {
+        try {
+            request.post(baseURL, blogData);
+        } catch (error) {
+            console.error(error);         
+        }
+        
+    }
 
     return {create,}
 };
 
 export const useBlog = (blogid) => {
     const [blog, setBlog] = useState({});
-
+    
     useEffect(() => {
         request.get(`${baseURL}/${blogid}`).then(setBlog);
     }, [blogid])
@@ -37,8 +43,8 @@ export const useBlog = (blogid) => {
     };
 };
 
-export const useLatesBlogs = () => {
-    const [latesBlogs, setLatestBlogs] = useState([]);
+export const useLatestBlogs = () => {
+    const [latestBlogs, setLatestBlogs] = useState([]);
 
     const page_size = 3;
     
@@ -47,9 +53,12 @@ export const useLatesBlogs = () => {
             sortBy: '_createdOn desc',
             pageSize: page_size
         });
-
-        request.get(`${baseURL}?${searchParams.toString()}`).then(setLatestBlogs);
-    }, [searchParams]);
+        try {
+            request.get(`${baseURL}?${searchParams.toString()}`).then(setLatestBlogs);
+        } catch (error) {
+            console.error(error)
+        }
+    }, []);
 
     return {
         latestBlogs,
@@ -59,7 +68,13 @@ export const useLatesBlogs = () => {
 export const useEditBlog = () => {
     const {request} = useAuth();
 
-    const edit = (blogid, blogData) => request.put(`${$baseURL}/${blogid}`, {...blogData, _id: blogid});
+    const edit = (blogid, blogData) => {
+        try {
+            request.put(`${baseURL}/${blogid}`, {...blogData, _id: blogid});
+        } catch (error) {
+            console.error(error)
+        }
+    }
     
 
     return {
@@ -70,7 +85,13 @@ export const useEditBlog = () => {
 export const useDeleteBlog = () => {
     const {request} = useAuth();
 
-    const deleteBlog = (blogid) => request.delete(`${baseURL}/${blogid}`);
+    const deleteBlog = (blogid) => {
+        try {
+            request.delete(`${baseURL}/${blogid}`);
+        } catch (error) {
+            console.error(error)
+        }
+    };
 
     return {
         deleteBlog,

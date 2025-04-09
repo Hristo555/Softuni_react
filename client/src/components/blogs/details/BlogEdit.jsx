@@ -1,16 +1,11 @@
 import {useNavigate, useParams } from "react-router";
-import CommentCreate from "../../comments/CommentCreate"
-import CommentShow from "../../comments/CommentShow";
-import { useBlogs, useEditBlog } from "../../../api/blogService";
-import useAuth from "../../../hooks/useAuth";
+import { useBlog, useEditBlog } from "../../../api/blogService";
 
 export default function BlogEdit(){
     const navigate = useNavigate();
-    const { email } = useAuth();
     const { blogid } = useParams();
     const { edit } = useEditBlog();
-    const { blog } = useBlogs();
-    const {comments} = useComments(blogid);
+    const { blog } = useBlog(blogid);
     
     const formAction = async (formData) => {
         const blogData = Object.fromEntries(formData);
@@ -20,10 +15,6 @@ export default function BlogEdit(){
         navigate(`/blogs/${blogid}/details`);
     };
     
-    const commentCreateHandler = (newComment) => {
-        // setComments(state => [...state, newComment])
-    };
-
     return(
         <>
          <form className="edit" action={formAction}>
@@ -38,12 +29,6 @@ export default function BlogEdit(){
                 <button className="submit-btn" type="submit">Edit Post</button>
             </div>
         </form>
-        <CommentCreate 
-        email={email}
-        blogid={blogid}
-        onCreate={commentCreateHandler}/>
-
-        <CommentShow comments={comments}/>
         </>
     );
 }

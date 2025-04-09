@@ -1,37 +1,61 @@
-import { useEffect, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 import useAuth from "../hooks/useAuth";
-import request from "../utils/request"
+import request from "../utils/request";
 
 const baseURL = 'http://localhost:3030/data/comments';
 
-export default{
-    async getAll(blogid){
-        const comments = await request.get(baseURL);
-
-        const blogComments = Object.values(comments).filter(comment => comments.blogid === blogid);
-
-        return blogComments;
-    },
-    create(email, blogid, comment){
-       return request.post(baseURL, {email, blogid, comment});
+function commReducer(state, action){
+    switch (action.type){
+        case 'ADD_COMMENT':
+            return [...state, action.payload]
+        case 'GET_ALL':
+            return action.payload
+        default:
+            return state
     }
 };
 
-export const  useComments = (blogid) => {
-    const {request} = useAuth();
-    const [comments, setComments] = useState([]);
+export const useComments = (blogid) => {
+    // const {request} = useAuth();
+    const {accessToken} = useAuth();
+    // const [comments, setComments] = useState([]);
+    const [comments, dispatch] = useReducer(commReducer, []);
 
     useEffect(() =>{
         const searchParams = new URLSearchParams({
-            where: `blogId="${blogid}"`
+            where: `blogId="${blogid}"`,
+            load: `author=_ownerId:users`
         });
 
-        request.get(`${baseURL}?${searchParams.toString()}`).then(setComments);
-    }, [request, blogid]);
+        const options = {
+            headers: {
+                'X-Authorization': accessToken
+            }
+        }
+
+        request.get(`${baseURL}?${searchParams.toString()}`, null, options)
+               .then(result => dispatch({type: 'GET_ALL', payload: result}));
+    }, [blogid, accessToken]);
 
     return {
         comments,
+        addComment: (commentData) => dispatch({type: 'ADD_COMENT', payload: commentData})
     }
+};
 
+export const useCreateComment = () => {
+    const {request} = useAuth();
+    const create = (blogid, comment) => {
 
-}
+        const commentData = {
+            blogid,
+            comment
+        };
+
+        request.post(baseURL, commentData);
+    };
+
+    return {
+        create,
+    }
+};
