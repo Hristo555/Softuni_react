@@ -1,5 +1,12 @@
+
 export default function Footer(){
     return(
-        <h1>Footer</h1>
+        <footer>
+            <div className="footer-wrapper">
+                <div className="contacts">You can contact us at:</div>
+                <div>
+                </div>
+            </div>
+        </footer>
     );
-}
+}; 

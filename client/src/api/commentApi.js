@@ -1,46 +1,65 @@
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useCallback, useState } from "react";
 import useAuth from "../hooks/useAuth";
 import request from "../utils/request";
 
 const baseURL = 'http://localhost:3030/data/comments';
 
-function commReducer(state, action){
-    switch (action.type){
-        case 'ADD_COMMENT':
-            return [...state, action.payload]
-        case 'GET_ALL':
-            return action.payload
-        default:
-            return state
-    }
-};
+// function commReducer(state, action){
+//     switch (action.type){
+//         case 'ADD_COMMENT':
+//             return [...state, action.payload]
+//         case 'GET_ALL':
+//             return action.payload
+//         default:
+//             return state
+//     }
+// };
 
 export const useComments = (blogid) => {
-    // const {request} = useAuth();
-    const {accessToken} = useAuth();
-    // const [comments, setComments] = useState([]);
-    const [comments, dispatch] = useReducer(commReducer, []);
+    const { request } = useAuth();
+    const [comments, setComments] = useState([]);
 
-    useEffect(() =>{
+    // Memoize the fetchComments function to ensure it's stable between renders
+    const fetchComments = useCallback(() => {
         const searchParams = new URLSearchParams({
-            where: `blogId="${blogid}"`,
+            where: `blogid="${blogid}"`,
             load: `author=_ownerId:users`
         });
 
-        const options = {
-            headers: {
-                'X-Authorization': accessToken
-            }
-        }
+        // Fetch comments from the API
+        return request.get(`${baseURL}?${searchParams.toString()}`)
+            .then(setComments);
+    }, [request, blogid]); // Only recreate fetchComments if request or blogid changes
 
-        request.get(`${baseURL}?${searchParams.toString()}`, null, options)
-               .then(result => dispatch({type: 'GET_ALL', payload: result}));
-    }, [blogid, accessToken]);
+    // Add a new comment
+    const addComment = useCallback((newComment) => {
+        // Make a POST request to add the new comment
+        console.info(newComment);
+        request.post(`${baseURL}`, {
+            data: {
+                blogid,
+                content: newComment.content, // or whatever fields you need
+                author: newComment.author,   // example of author field
+            },
+        })
+        .then(() => {
+            // After adding the comment, refetch the comments
+            fetchComments();
+        })
+        .catch((error) => {
+            console.error('Error adding comment:', error);
+        });
+    }, [request, blogid, fetchComments]); // addComment will be recreated if blogid or request changes
+
+    // Fetch comments when component mounts or blogid changes
+    useEffect(() => {
+        fetchComments();
+    }, []);
 
     return {
         comments,
-        addComment: (commentData) => dispatch({type: 'ADD_COMMENT', payload: commentData})
-    }
+        addComment, // Expose the addComment function
+    };
 };
 
 export const useCreateComment = () => {

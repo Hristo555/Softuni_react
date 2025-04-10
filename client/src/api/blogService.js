@@ -46,7 +46,7 @@ export const useBlog = (blogid) => {
 export const useLatestBlogs = () => {
     const [latestBlogs, setLatestBlogs] = useState([]);
 
-    const page_size = 3;
+    const page_size = 4;
     
     useEffect(() => {
         const searchParams = new URLSearchParams({

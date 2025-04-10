@@ -1,6 +1,6 @@
 import { Link, useNavigate, useParams } from "react-router";
 import { useBlog, useDeleteBlog } from "../../../api/blogService";
-import { useOptimistic } from "react";
+import { useOptimistic, useState } from "react";
 import useAuth from "../../../hooks/useAuth";
 import CommentCreate from "../../comments/CommentCreate";
 import CommentShow from "../../comments/CommentShow";
@@ -15,7 +15,7 @@ export default function BlogDetails(){
     const { deleteBlog } = useDeleteBlog()
     const {create} = useCreateComment();
     const {comments, addComment} = useComments(blogid);
-    const [optimisticComments, setOptimisticComments] = useOptimistic(comments); 
+    const [_,setOptimisticComments] = useState(comments); 
 
     const Delete = async () => {
        const hasConfirm = confirm(`Are you sure you want to delete ${blog.title}?`);
@@ -32,8 +32,7 @@ export default function BlogDetails(){
 
     const commentCreateHandler = async (formData) => {
         const comment = formData.get('comment');
-        //new comms
-        const newOptimisticComment = {
+        const newComment = {
             _id: uuid(),
             _ownerId: _id,
             blogid,
@@ -44,7 +43,7 @@ export default function BlogDetails(){
             }
         };
         
-        setOptimisticComments((optState) => [...optState, newOptimisticComment]);
+        setOptimisticComments((newState) => [...newState, newComment]);
 
         const commentResult = await create(blogid, comment);
 
@@ -72,7 +71,7 @@ export default function BlogDetails(){
         blogid={blogid}
         onCreate={commentCreateHandler}/>
 
-        <CommentShow comments={optimisticComments}/>
+        <CommentShow comments={comments}/>
         </>
     );
 }
