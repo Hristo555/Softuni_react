@@ -20,7 +20,7 @@ export default function Home(){
                                 <div className="blog p-3 w-1/4" key={blog._id}>
                                     <h3 className="mb-2 p-2 bg-gree-200 border-1 bg-white">{blog.title}</h3>
                                     <div className="in-wrapper h-[400px] border-1 bg-white">
-                                        <div className="post-image"><img className="w-[500px] w-[400px]" src={blog.image} alt="Post image" /></div>
+                                        <div className="post-image"><img className="w-[500px] h-[300px]" src={blog.image} alt="Post image" /></div>
                                         <div className="mt-10">{blog.body.substring(0, 100)}...</div>
                                     </div>
                                     <Link to={`/blogs/${blog._id}/details`} 
