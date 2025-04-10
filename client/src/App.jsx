@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router"
 import '../public/App.css'
+import "typeface-roboto";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { UserContext } from "./context/UserContext"
