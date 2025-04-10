@@ -53,25 +53,34 @@ export default function BlogDetails(){
     const owner = _id === blog._ownerId;
     
     return(
-        <>
-        <div className="blog-title">Blog Title: 
-            {blog.title}
-        </div>
-        <div className="blog-body">Blog Body: 
-            {blog.body}
-        </div>
-        {}
-        {owner && <div className="buttons">
-            <Link to={`/blogs/${blogid}/edit`} className="edit-btn">Edit</Link>
-            <button onClick={Delete} className="delete-btn">Delete</button>
-        </div>}
+        <div className="page-wraper">
+            <div className="blog- flex flex-col">
+                <div className="blog-title p-3 mt-3 mb-3 text-center bg-white">
+                    {blog.title}
+                </div>
+                <div className="flex border-b-2 border-t-2">
+                    <div className="blog-body p-2 m-2">
+                        {blog.body}
+                    </div>
+                    <img className="p-2 m-2" src={blog.image} alt="Post image" />
+                </div>
+                {owner && <div className="buttons m-4 w-1/2">
+                    <Link className="pl-4 pr-4 pt-2 pb-2 mx-2.5 border-2 bg-white edit-btn" to={`/blogs/${blogid}/edit`}>Edit</Link>
+                    <Link className="pl-4 pr-4 pt-2 pb-2 mx-2.5 border-2 bg-white delete-btn" onClick={Delete}>Delete</Link>
+                        </div>}
+            </div>
 
-        <CommentCreate 
-        email={email}
-        blogid={blogid}
-        onCreate={commentCreateHandler}/>
-
-        <CommentShow comments={comments}/>
-        </>
+            <div className="flex justify-around mt-10">
+                <div className="comments-wrapper w-1/2 m-4">
+                    <div className="create-comment order-2">
+                        <CommentCreate 
+                        email={email}
+                        blogid={blogid}
+                        onCreate={commentCreateHandler}/>
+                    </div>
+                    <CommentShow comments={comments}/>
+                </div>
+            </div>
+        </div>
     );
 }

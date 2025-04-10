@@ -1,36 +1,30 @@
 import { Link } from "react-router";
 import { useLatestBlogs } from "../../api/blogService";
-import Slider from "react-slick";
 
 export default function Home(){
     const {latestBlogs} = useLatestBlogs()
-    const width = latestBlogs.length;
-    console.info(width);
 
-    var settings = {
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        arrows: false,
-        adaptiveHeight: true
-      };
+    const width = latestBlogs.length;
+    console.info(latestBlogs)
+    if(!width){
+        return false;
+    }
+    
     return(
         <section className="welcome">
-                    <div className="home-page flex flex-col text-center h-screen bg-white">
+                    <div className="home-page flex flex-col text-center bg-orange-200">
                         <h1 className="m-7">Here you can check different opinions on different themes..</h1>
                         <h1 className="m-7">Latest Posts</h1>
                         <div className="wrapper flex justify-evenly">
                             {latestBlogs.map(blog => (
                                 <div className="blog p-3 w-1/4" key={blog._id}>
-                                    <h3 className="mb-2 p-2 bg-gree-200 border-1">{blog.title}</h3>
-                                    <div className="in-wrapper flex border-1">
-                                        <div className="m-2 p-3 border-green-200 border-2 w-1/2 text-left hover:bg-green-200">{blog.body.substring(0, 300)}...</div>
-                                        <div className="data-buttons m-2 p-3 flex w-1/2 justify-center">
-                                            <Link to={`/blogs/${blog._id}/details`} className="btn details-btn p-3 rounded-md border-green-200 border-2 self-center hover:bg-green-200">Read More</Link>
-                                        </div>
+                                    <h3 className="mb-2 p-2 bg-gree-200 border-1 bg-white">{blog.title}</h3>
+                                    <div className="in-wrapper h-[400px] border-1 bg-white">
+                                        <div className="post-image"><img className="w-[500px] w-[400px]" src={blog.image} alt="Post image" /></div>
+                                        <div className="mt-10">{blog.body.substring(0, 100)}...</div>
                                     </div>
+                                    <Link to={`/blogs/${blog._id}/details`} 
+                                    className="btn details-btn inline-block m-2.5 p-3 border-2 self-center bg-white ">Read More</Link>
                                 </div>
                             ))}
                         </div>

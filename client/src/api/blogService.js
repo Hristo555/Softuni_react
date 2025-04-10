@@ -8,7 +8,7 @@ export const useBlogs = () => {
     const [blogs, setBlogs] = useState([]);
 
     useEffect(() => {
-        request.get(baseURL).then(setBlogs);
+        request.get(baseURL).then(setBlogs).catch(err => console.error(err));
     }, []);
 
     return {
@@ -20,13 +20,8 @@ export const useCreateBlog = () => {
     const {request} = useAuth();
 
     const create = (blogData) => {
-        try {
-            request.post(baseURL, blogData);
-        } catch (error) {
-            console.error(error);         
-        }
-        
-    }
+            request.post(baseURL, blogData).catch(err => console.error(err));
+    };
 
     return {create,}
 };

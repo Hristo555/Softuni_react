@@ -35,12 +35,13 @@ export default function App() {
       <div className="box">
           <Header />
 
-      <main className="main">
+      <main className="main bg-orange-200">
             <Routes>
                 <Route element={<Protected/>}>
                     <Route path="/account" element={<MyAccount />} />
                     <Route path="/blogs/:blogid/edit" element={<BlogEdit />} />
                     <Route path="/createblog" element={<Create />} />
+                    <Route path="/logout" element={<Logout />} />
                 </Route>
                 <Route element={<Guest/>}>
                     <Route path="/login" element={<Login />} />
@@ -48,7 +49,6 @@ export default function App() {
                 </Route>
                     <Route index element={<Home />}/>
                     <Route path="/blogs" element={<Show_all />} />
-                    <Route path="/logout" element={<Logout />} />
                     <Route path="/blogs/:blogid/details" element={<BlogDetails />} />
         </Routes>
       </main>

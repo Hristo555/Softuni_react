@@ -1,5 +1,4 @@
 import { Link, useNavigate } from "react-router";
-import styles from "./Register.module.css";
 import { useRegister } from "../../api/authApi";
 import { useContext } from "react";
 import { UserContext } from "../../context/UserContext"
@@ -29,27 +28,30 @@ export default function Register() {
     return (
         <section id="register-page" className="content auth">
             <form id="register" action={registerForm}>
-                <div className={styles.container}>
-                    <h1>Register</h1>
+                <div className="flex flex-col text-center relative">
+                    <div className="absolute left-[40%] mt-10 bg-white rounded-md">
+                        <h1 className="mt-2 mb-2">Register</h1>
 
-                    <div className={styles.input_email}>
-                        <label htmlFor="email">Email:</label>
-                        <input type="email" id="email" name="email" placeholder="maria@email.com" />
-                    </div>
-                    <div className={styles.input_password}>
-                        <label htmlFor="pass">Password:</label>
-                        <input type="password" name="password" id="register-password" />
-                    </div>
-                    <div className={styles.input_confirm_password}>
-                        <label htmlFor="con-pass">Confirm Password:</label>
-                        <input type="password" name="confirm-password" id="confirm-password" />
-                    </div>
+                        <div className="p-2 m-2 relative">
+                            <label className="absolute bottom-[33px]" htmlFor="email">Email:</label>
+                            <input className="border-2" type="email" id="email" name="email" placeholder="maria@email.com" />
+                        </div>
+                        <div className="p-2 m-2 relative">
+                            <label className="absolute bottom-[33px]" htmlFor="pass">Password:</label>
+                            <input className="border-2" type="password" name="password" id="register-password" />
+                        </div>
+                        <div className=" p-2 m-2 relative">
+                            <label className="absolute bottom-[33px]" htmlFor="con-pass">Confirm Password:</label>
+                            <input className="border-2" type="password" name="confirm-password" id="confirm-password" />
+                        </div>
+                        <div>
+                            <input className="btn submit p-2 pl-4 pr-4 m-2 rounded-md bg-orange-200 text-black bold" type="submit" value="Register" />
+                        </div>
 
-                    <input className="btn submit" type="submit" value="Register" />
-
-                    <p className="field">
-                        <span>If you already have profile click <Link to="/login">here</Link></span>
-                    </p>
+                        <div className="field p-2 m-2">
+                            <span>If you already have profile click <Link to="/login"><b className="bold text-black">here</b></Link></span>
+                        </div>
+                    </div>
                 </div>
             </form>
         </section>

@@ -16,19 +16,20 @@ export default function BlogEdit(){
     };
     
     return(
-        <>
-         <form className="edit" action={formAction}>
-            <div className="container">
-                <label htmlFor="title">Title:</label>
-                <input type="text" id="title" name="title" placeholder="Enter blog title.." defaultValue={blog.title}/>
-                <label htmlFor="text">Text:</label>
-                <input type="text" id="text" name="body" placeholder="Enter blog text." defaultValue={blog.body}/>
-                <label htmlFor="imageURL">Image:</label>
-                <input type="hidden" id="imageURL" name="_id" />
-
-                <button className="submit-btn" type="submit">Edit Post</button>
+        <form className="edit" action={formAction}>
+        <div className="wrap flex flex-col text-center m-10 w-[250px] absolute left-[40%] bg-white p-4 rounded-md">
+            <div className="input-wrap p-2 m-2 relative">
+                <label className="absolute bottom-[35px]" htmlFor="title">Title:*</label>
+                <input type="text" className="border-2" id="title" name="title" placeholder="Enter blog title.." defaultValue={blog.title} required/>
             </div>
+            <div className="input-wrap p-2 m-2 relative">
+                <label className="absolute bottom-[110px]" htmlFor="text ">Text:*</label>
+                <textarea className="border-2 h-[100px]" id="text" name="body" placeholder="Enter blog text.." defaultValue={blog.body} required></textarea>
+            </div>
+           
+
+            <button className="submit-btn inline-block rounded-md bg-orange-200 text-black bold" type="submit">Edit Post</button>
+        </div>
         </form>
-        </>
     );
 }

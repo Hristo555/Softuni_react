@@ -5,8 +5,8 @@ import { UserContext } from "../../context/UserContext";
 export default function Header(){
     const {email} = useContext(UserContext);
     const {pathname} = useLocation();
-    const style = 'p-2 m-2 text-black border-green-200 border-b-2 font-bold hover:bg-green-200',
-          selected_style = 'p-2 m-2 text-black bg-green-200 border-green-200 border-b-2 font-bold hover:bg-green-200';
+    const style = 'p-2 m-2 text-black border-orange-200 border-b-2 font-bold hover:bg-orange-200',
+          selected_style = 'p-2 m-2 text-black bg-orange-200 border-orange-200 border-b-2 font-bold hover:bg-grorangeeen-200';
     return(
         <header className="bg-white p-3 border-b-2">
             <nav className="flex justify-evenly p-3">
@@ -15,7 +15,7 @@ export default function Header(){
                     <Link className={pathname === '/' ? selected_style : style} to="/">Home</Link>
                     <Link className={pathname.includes('blogs') ? selected_style : style} to="/blogs">Blogs</Link>
                     <Link className={pathname === '/account' ? selected_style : style} to="/account">Account</Link>
-                    <Link className={pathname === '/logout' ? selected_style : style} to="/logout">Logout</Link>
+                    {email ? <Link className={pathname === '/logout' ? selected_style : style} to="/logout">Logout</Link> : ''}
                     {!email ? <Link className={pathname === '/login' ? selected_style : style} to="/login">Login</Link> : ''}
                     {!email ? <Link className={pathname === '/register' ? selected_style : style} to="/register">Register</Link> : ''}
                 </div>
