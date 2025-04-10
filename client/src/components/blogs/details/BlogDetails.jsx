@@ -43,7 +43,7 @@ export default function BlogDetails(){
                 email,
             }
         };
-
+        
         setOptimisticComments((optState) => [...optState, newOptimisticComment]);
 
         const commentResult = await create(blogid, comment);

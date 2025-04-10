@@ -39,7 +39,7 @@ export const useComments = (blogid) => {
 
     return {
         comments,
-        addComment: (commentData) => dispatch({type: 'ADD_COMENT', payload: commentData})
+        addComment: (commentData) => dispatch({type: 'ADD_COMMENT', payload: commentData})
     }
 };
 
